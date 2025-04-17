@@ -1,0 +1,6 @@
+colorama
+requests
+undetected-chromedriver
+selenium
+cloudscraper
+pickle
