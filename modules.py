@@ -31,7 +31,8 @@ def driver_init(chrome_user_data=None, headless=False):
     driver = webdriver.Chrome(options=options)
     # driver.set_window_size(50, 500)
     driver.maximize_window()
-    driver.set_page_load_timeout(10000)
+    driver.set_page_load_timeout(20)
+    driver.set_script_timeout(20)
     return driver
 
 # make color for logs
