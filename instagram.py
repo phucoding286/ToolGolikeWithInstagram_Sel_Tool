@@ -31,7 +31,8 @@ def follow(driver, link, time_scroll=5):
         find_cell.send_keys(username)
         time.sleep(2)
         
-        while True:
+        error_find_username = True
+        for _ in range(10):
             try:
                 first_user = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located(
@@ -39,9 +40,14 @@ def follow(driver, link, time_scroll=5):
                     )
                 )[0]
                 first_user.click()
+                error_find_username = False
                 break
             except:
+                time.sleep(1)
+                print(error_color(f"[!] có lỗi khi tìm kiếm đối tượng username, thử lại..."))
                 continue
+        if error_find_username:
+            return {"error": "Có lỗi khi find và check username"}
         
         username_correct = False
         for _ in range(5):
@@ -111,7 +117,7 @@ def follow(driver, link, time_scroll=5):
         return {"error": "Có lỗi khi follow"}
 
 if __name__ == "__main__":
-    driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\nguyentram1_")
+    driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\nguyentram1_", True)
     driver.get("https://instagram.com/")
     input(">>> ")
     print(follow(driver, "https://www.instagram.com/alva.order"))
