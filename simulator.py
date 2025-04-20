@@ -26,6 +26,8 @@ def post_scroll(driver: webdriver.Chrome, time_scroll):
             break
         except:
             time.sleep(1)
+            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang..."))
+            driver.refresh()
             continue
 
     hist_i, i, limit, speed = 0, 0, 500, 50
@@ -54,6 +56,8 @@ def explore_scroll(driver: webdriver.Chrome, time_scroll):
             break
         except:
             time.sleep(1)
+            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang..."))
+            driver.refresh()
             continue
 
     hist_i, i, limit, speed = 0, 0, 500, 50
