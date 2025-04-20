@@ -23,7 +23,7 @@ def driver_init(chrome_user_data=None, headless=False):
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     if headless:
-        options.add_argument("--headless=new")
+        options.add_argument("--headless")
 
     if chrome_user_data is not None:
         options.add_argument(f"--user-data-dir={chrome_user_data}")
