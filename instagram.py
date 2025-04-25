@@ -1,15 +1,5 @@
 from modules import *
-
-def smooth_scroll(driver, hist_i=0, i=0, limit=500, speed=50):
-    while i < limit:
-        i += speed
-        driver.execute_script(f"window.scrollTo({hist_i}, {i});")
-        hist_i = i
-    return hist_i, i
-
-def rdn_do():
-    list_decision = [False for _ in range(5)] + [True for _ in range(4)]
-    return random.choice(list_decision)
+from simulator import random_scroll
 
 def follow(driver, link, time_scroll=5):
     try:
@@ -70,22 +60,10 @@ def follow(driver, link, time_scroll=5):
             return {"error": "Có lỗi khi follow"}
         
         # scroll xuôi
-        hist_i, i, limit, speed = 0, 0, 500, 50
-        for _ in range(time_scroll):
-            hist_i, i = smooth_scroll(driver, hist_i, i, limit, speed)
-            limit += 500
-            time.sleep(1)
-            print(system_color(f"[>] scroll user page lần {_+1}/{time_scroll}"))
-
-            while True:
-                if not rdn_do():
-                    print("[>] chờ 1s scroll user page...")
-                    time.sleep(1)
-                else:
-                    break
-
+        out = random_scroll(driver)
+        if "error" in out: return out
         # scroll ngược
-        driver.execute_script(f"window.scrollTo({i}, {0});")
+        driver.execute_script(f"window.scrollTo(1000, 0);")
 
         follow_btn = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
@@ -117,7 +95,7 @@ def follow(driver, link, time_scroll=5):
         return {"error": "Có lỗi khi follow"}
 
 if __name__ == "__main__":
-    driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\nguyentram1_", True)
+    driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\ntam123456_", False)
     driver.get("https://instagram.com/")
     input(">>> ")
     print(follow(driver, "https://www.instagram.com/alva.order"))
