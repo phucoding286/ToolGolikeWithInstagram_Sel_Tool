@@ -15,7 +15,7 @@ def rdn_do():
     return random.choice(list_decision)
 
 def post_scroll(driver: webdriver.Chrome, time_scroll):
-    while True:
+    for i in range(4):
         try:
             home_btn = WebDriverWait(driver, 10).until(
                 EC.presence_of_all_elements_located(
@@ -26,9 +26,11 @@ def post_scroll(driver: webdriver.Chrome, time_scroll):
             break
         except:
             time.sleep(1)
-            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang..."))
+            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang {i}/4"))
             driver.refresh()
             continue
+    else:
+        return 0
 
     hist_i, i, limit, speed = 0, 0, 500, 50
     for _ in range(time_scroll):
@@ -45,7 +47,7 @@ def post_scroll(driver: webdriver.Chrome, time_scroll):
                 break
 
 def explore_scroll(driver: webdriver.Chrome, time_scroll):
-    while True:
+    for i in range(4):
         try:
             explore_btn = WebDriverWait(driver, 10).until(
                 EC.presence_of_all_elements_located(
@@ -56,10 +58,12 @@ def explore_scroll(driver: webdriver.Chrome, time_scroll):
             break
         except:
             time.sleep(1)
-            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang..."))
+            print(error_color(f"[!] chưa tìm thấy nút home, thử refresh lại trang {i}/4"))
             driver.refresh()
             continue
-
+    else:
+        return 0
+    
     hist_i, i, limit, speed = 0, 0, 500, 50
     for _ in range(time_scroll):
         hist_i, i = smooth_scroll(driver, hist_i, i, limit, speed)
