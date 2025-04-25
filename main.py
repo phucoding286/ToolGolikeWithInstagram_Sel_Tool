@@ -208,7 +208,10 @@ def __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, head
             driver.quit()
             waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
     except:
-        driver.quit()
+        try:
+           driver.quit()
+        except:
+            pass
         try:
             r = requests.get("https://www.google.com/")
         except:
