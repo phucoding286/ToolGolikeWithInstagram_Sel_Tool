@@ -35,7 +35,7 @@ def add_new_session():
             print(error_color(f"[!] username {session_name} đã tồn tại vui lòng nhập username instagram mới!"))
             continue
         elif session_name not in username_id_ins_gl:
-            print(error_color(f"[!] username {session_name} đã tồn tại vui lòng nhập username instagram đúng!"))
+            print(error_color(f"[!] username {session_name} chưa tồn tại vui lòng nhập username instagram đúng!"))
             continue
         else:
             break
@@ -198,8 +198,8 @@ def __run(
         return "success"
 
 def __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, headless):
-    try:
-        for username_ins, session_path in data.items():
+    for username_ins, session_path in data.items():
+        try:
             print(system_color(f"[>] account đang chạy -> {username_ins}"))
             driver = driver_init(session_path, headless)
             load_cookies(driver, cookie_f_name=username_ins)
@@ -207,16 +207,17 @@ def __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, head
             storage_cookies(driver, cookie_f_name=username_ins)
             driver.quit()
             waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
-    except:
-        try:
-           driver.quit()
         except:
-            pass
-        try:
-            r = requests.get("https://www.google.com/")
-        except:
-            print(error_color("\n[!] Không có mạng!"))
-            input(system_color("[!] Phát hiện không có mạng, chương trình tạm dừng, chờ can thiệp, enter để tiếp tục chạy\n-> "))
+            try:
+                driver.quit()
+            except:
+                pass
+            waiting_ui(waitime, f"Có lỗi không xác định hãy đợi {waitime}s để tiếp tục")
+            try:
+                r = requests.get("https://www.google.com/")
+            except:
+                print(error_color("\n[!] Không có mạng!"))
+                input(system_color("[!] Phát hiện không có mạng, chương trình tạm dừng, chờ can thiệp, enter để tiếp tục chạy\n-> "))
 
 def main_program():
     waitime = int(input(system_color("[?] Nhập số thời gian delay giữa mỗi lần tương tác\n-> ")))
