@@ -87,7 +87,7 @@ def random_scroll(driver: webdriver.Chrome):
         print(system_color(f"[>] Số lần tổng scroll {i+1}/{total_scroll}"))
     return ""
 
-def post_scroll(driver: webdriver.Chrome, time_scroll):
+def post_scroll(driver: webdriver.Chrome):
     for i in range(4):
         try:
             home_btn = WebDriverWait(driver, 10).until(
@@ -107,7 +107,7 @@ def post_scroll(driver: webdriver.Chrome, time_scroll):
 
     return random_scroll(driver)
 
-def explore_scroll(driver: webdriver.Chrome, time_scroll):
+def explore_scroll(driver: webdriver.Chrome):
     for i in range(4):
         try:
             explore_btn = WebDriverWait(driver, 10).until(
@@ -127,14 +127,14 @@ def explore_scroll(driver: webdriver.Chrome, time_scroll):
     
     return random_scroll(driver)
 
-def simulate(driver, time_scroll=5):
+def simulate(driver):
     choice = random.choice(["e", "p"])
     if choice == "e":
         print(purple_color("[>] simulate in Explore"))
-        explore_scroll(driver, time_scroll)
+        explore_scroll(driver)
     elif choice == "p":
         print(purple_color("[>] simulate in Post"))
-        post_scroll(driver, time_scroll)
+        post_scroll(driver)
 
 if __name__ == "__main__":
     driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\tteteyk")

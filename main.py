@@ -111,7 +111,6 @@ def __run(
         driver,
         account_id,
         max_times_rgj=5,
-        scroll_times=5,
         max_wait_block=2
     ):
     """
@@ -122,7 +121,7 @@ def __run(
     """
 
     try:
-        simulate(driver, scroll_times)
+        simulate(driver)
     except:
         return "error"
 
@@ -197,13 +196,13 @@ def __run(
         print(success_color(f"[$] tổng thu thập -> {prices}đ"))
         return "success"
 
-def __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, headless):
+def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chrome):
     for username_ins, session_path in data.items():
         try:
             print(system_color(f"[>] account đang chạy -> {username_ins}"))
-            driver = driver_init(session_path, headless)
+            driver = driver_init(session_path, headless, hide_chrome)
             load_cookies(driver, cookie_f_name=username_ins)
-            __run(driver, username_id_ins_gl[username_ins], 5, scroll_times, max_wait_block)
+            __run(driver, username_id_ins_gl[username_ins], 5, max_wait_block)
             storage_cookies(driver, cookie_f_name=username_ins)
             driver.quit()
             waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
@@ -221,16 +220,16 @@ def __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, head
 
 def main_program():
     waitime = int(input(system_color("[?] Nhập số thời gian delay giữa mỗi lần tương tác\n-> ")))
-    scroll_times = int(input(system_color("[?] Nhập số lần scroll trước khi tương tác\n-> ")))
     max_wait_block = int(input(system_color("[?] Nhập số thời gian chờ khi có dấu hiệu bị chặn follow\n-> ")))
-    headless = True if input(system_color("[?] dùng headless? (y/N)\n-> ")).lower().strip() == "y" else False
+    headless = True if input(system_color("[?] Dùng headless? (y/N)\n-> ")).lower().strip() == "y" else False
+    if not headless: hide_chrome = True if input(system_color("Nếu bạn không dùng headless thì dùng hide chrome chứ? (y/n)\n-> ")).lower().strip() == "y" else False
     print()
     rchk = check_instagram_account_id()
     username_id_ins_gl = {account_id[1]: account_id[0] for account_id in rchk}
     data = json.load(open(sessions_manager_file))['data']
     while True:
         try:
-            __main(username_id_ins_gl, data, waitime, scroll_times, max_wait_block, headless)
+            __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chrome)
         except:
             continue
     

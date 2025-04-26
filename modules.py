@@ -18,13 +18,15 @@ import random
 import requests
 colorama.init()
 
-def driver_init(chrome_user_data=None, headless=False):
+def driver_init(chrome_user_data=None, headless=False, hide_chrome=False):
     options = webdriver.ChromeOptions() 
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     options.add_argument('--window-size=1920,1080')
     if headless:
         options.add_argument('--headless=new')
+    elif hide_chrome:
+        options.add_argument('--window-position=0,10000')
 
     if chrome_user_data is not None:
         options.add_argument(f"--user-data-dir={chrome_user_data}")
