@@ -223,6 +223,7 @@ def main_program():
     max_wait_block = int(input(system_color("[?] Nhập số thời gian chờ khi có dấu hiệu bị chặn follow\n-> ")))
     headless = True if input(system_color("[?] Dùng headless? (y/N)\n-> ")).lower().strip() == "y" else False
     if not headless: hide_chrome = True if input(system_color("Nếu bạn không dùng headless thì dùng hide chrome chứ? (y/n)\n-> ")).lower().strip() == "y" else False
+    else: hide_chrome = False
     print()
     rchk = check_instagram_account_id()
     username_id_ins_gl = {account_id[1]: account_id[0] for account_id in rchk}
