@@ -23,6 +23,14 @@ def driver_init(chrome_user_data=None, headless=False, hide_chrome=False):
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     options.add_argument('--window-size=1920,1080')
+
+    # đảm bảo chrome vẫn render hình ảnh dù bị ẩn
+    options.add_argument("--disable-background-timer-throttling")
+    options.add_argument("--disable-backgrounding-occluded-windows")
+    options.add_argument("--disable-renderer-backgrounding")
+    options.add_argument("--disable-features=PaintHolding")
+    options.add_argument("--disable-features=FreezeUserAgent")
+
     if headless:
         options.add_argument('--headless=new')
     elif hide_chrome:
