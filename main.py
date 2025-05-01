@@ -237,9 +237,9 @@ def main_program():
 if __name__ == "__main__":
     GOLIKE_HEADERS['Authorization'] = open("auth.txt").read()
     GOLIKE_HEADERS['t'] = open("t.txt").read()
-    account_id = check_instagram_account_id()
 
     while True:
+        account_id = check_instagram_account_id()
         print(system_color(" ----------------------------------------------------"))
         print(system_color("| Tool Golike Instagram By PhuTech (Programing-Sama) |"))
         print(system_color("|     Công cụ được xây dựng dựa trên APPIUM          |"))
