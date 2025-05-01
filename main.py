@@ -237,6 +237,7 @@ def main_program():
 if __name__ == "__main__":
     GOLIKE_HEADERS['Authorization'] = open("auth.txt").read()
     GOLIKE_HEADERS['t'] = open("t.txt").read()
+    account_id = check_instagram_account_id()
 
     while True:
         print(system_color(" ----------------------------------------------------"))
@@ -253,6 +254,7 @@ if __name__ == "__main__":
         print(system_color("| [1] Thêm golike t                               |"))
         print(system_color("| [2] Thêm phiên                                  |"))
         print(system_color("| [3] Chạy tool                                   |"))
+        print(system_color(f"| [{len(account_id)}] <- Tổng số lượng accounts                  |"))
         print(system_color(" -------------------------------------------------"))
         print()
 
