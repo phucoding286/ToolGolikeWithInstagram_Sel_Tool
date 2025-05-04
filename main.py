@@ -161,12 +161,18 @@ def __run(
         if "success" in rdj:
             print(success_color(f"[#] {rdj['success']}"))
         else:
-            print(error_color(f"[!] {rdj['color']}"))
+            print(error_color(f"[!] {rdj['error']}"))
             return "error_drop_job"
         return "follow_block"
     
     elif isinstance(rfl, dict) and "followed" in rfl:
         print(error_color(f"[!] {rfl['followed']}"))
+        rdj =  drop_job(rgj[1], rgj[3], account_id, rgj[2])
+        if "success" in rdj:
+            print(success_color(f"[#] {rdj['success']}"))
+        else:
+            print(error_color(f"[!] {rdj['error']}"))
+            return "error_drop_job"
         return "followed"
     elif isinstance(rfl, dict) and "success" in rfl:
         print(success_color(f"[$] {rfl['success']}"))
@@ -178,14 +184,26 @@ def __run(
         if "success" in rdj:
             print(success_color(f"[#] {rdj['success']}"))
         else:
-            print(error_color(f"[!] {rdj['color']}"))
+            print(error_color(f"[!] {rdj['error']}"))
             return "error_drop_job"
         return "unknow_follow_error"
     
     rvrf = verify_complete_job(rgj[1], account_id)
+    for i in range(5):
+        if "error" in rvrf:
+            print(error_color(f"[!] Lỗi khi xác minh job, thử lại {i+1}/5"))
+            rvrf = verify_complete_job(rgj[1], account_id)
+        else:
+            break
 
     if isinstance(rvrf, dict) and "error" in rvrf:
         print(error_color(f"[!] {rvrf['error']}"))
+        rdj =  drop_job(rgj[1], rgj[3], account_id, rgj[2])
+        if "success" in rdj:
+            print(success_color(f"[#] {rdj['success']}"))
+        else:
+            print(error_color(f"[!] {rdj['error']}"))
+            return "error_drop_job"
         return "error_verify_job"
     else:
         print(success_color(f"[$] {rvrf[1]}"))
