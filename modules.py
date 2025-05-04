@@ -17,6 +17,7 @@ import cloudscraper
 import random
 import requests
 colorama.init()
+scraper = cloudscraper.CloudScraper()
 
 def driver_init(chrome_user_data=None, headless=False, hide_chrome=False):
     options = webdriver.ChromeOptions() 

@@ -242,6 +242,10 @@ def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chr
                 elif run_res == "error_get_job":
                     max_error_get_job_times += 1
                     waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
+                    driver.execute_script("window.open();")
+                    driver.close()
+                    handles = driver.window_handles
+                    driver.switch_to.window(handles[0])
                 else:
                     waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
                     driver.execute_script("window.open();")
