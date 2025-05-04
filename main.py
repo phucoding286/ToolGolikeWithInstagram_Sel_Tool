@@ -110,7 +110,7 @@ def load_cookies(driver, cookie_f_name="session_name"):
 def __run(
         driver,
         account_id,
-        max_times_rgj=5
+        max_times_rgj=10
     ):
     """
     this function can return one in values
@@ -227,7 +227,7 @@ def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chr
             load_cookies(driver, cookie_f_name=username_ins)
 
             for i in range(100):
-                if max_error_get_job_times >= 2:
+                if max_error_get_job_times >= 5:
                     print(error_color("[!] Lỗi nhận job vượt quá số lần quy định, đổi account.."))
                     max_error_get_job_times = 0
                     break
