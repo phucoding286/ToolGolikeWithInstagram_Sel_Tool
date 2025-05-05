@@ -98,7 +98,7 @@ def verify_complete_job(ads_id, account_id):
             prices += int(c['data']['prices'])
             return (c['status'], f"trạng thái [{c['status']}] -> {'thành công' if c['success'] else 'không thành công'}", f"tiền công -> {c['data']['prices']}đ")
         except:
-            print(error_color(f"[!] đã có lỗi khi xác minh job, thử lại ({i}/5)"))
+            print(error_color(f"[!] đã có lỗi khi xác minh job, thử lại ({i+1}/5)"))
             time.sleep(1)
             continue
     return {"error": f"đã có lỗi khi xác minh hoàn thành job"}

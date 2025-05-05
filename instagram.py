@@ -37,7 +37,7 @@ def follow(driver, link, time_scroll=5):
                 print(error_color(f"[!] có lỗi khi tìm kiếm đối tượng username, thử lại..."))
                 continue
         if error_find_username:
-            driver.get(link)
+            return {"error": "Lỗi khi tìm kiếm username"}
         
         username_correct = False
         for _ in range(5):
@@ -95,7 +95,7 @@ def follow(driver, link, time_scroll=5):
         return {"error": "Có lỗi khi follow"}
 
 if __name__ == "__main__":
-    driver = driver_init(r"E:\MySRC\golike-tools\golike_instagram_selenium\ntam123456_", False, True)
+    driver = driver_init(r"D:\\GolikeData\\dino876123", False, False)
     driver.get("https://instagram.com/")
     input(">>> ")
     print(follow(driver, "https://www.instagram.com/alva.order"))
