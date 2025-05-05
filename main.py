@@ -207,7 +207,7 @@ def __run(
         return "success"
 
 def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chrome):
-
+    block_act_wait_counter = 0
     for username_ins, session_path in data.items():
         try:
             print(system_color(f"[>] account đang chạy -> {username_ins}"))
@@ -218,10 +218,15 @@ def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chr
                 print(system_color(f"[>] account đang chạy -> {username_ins}, số lần chạy {i+1}/25"))
                 run_res = __run(driver, username_id_ins_gl[username_ins], 5)
                 if run_res == "follow_block":
-                    waiting_ui(max_wait_block, text=f"Hãy đợi {max_wait_block} để tiếp tục do instagram bắt đầu block follow")
-                    print(error_color(f"[!] Account {username_ins} bị block follow, đổi account khác.."))
+                    if block_act_wait_counter >= 2:
+                        waiting_ui(max_wait_block, text=f"Hãy đợi {max_wait_block} để tiếp tục do instagram bắt đầu block follow")
+                        block_act_wait_counter = 0
+                    else:
+                        print(error_color(f"[!] Account {username_ins} bị block follow, đổi account khác.."))
+                        block_act_wait_counter += 1
                     break
                 waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
+                block_act_wait_counter = 0
                 
             storage_cookies(driver, cookie_f_name=username_ins)
             driver.quit()
