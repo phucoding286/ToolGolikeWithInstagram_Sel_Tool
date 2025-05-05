@@ -189,12 +189,6 @@ def __run(
         return "unknow_follow_error"
     
     rvrf = verify_complete_job(rgj[1], account_id)
-    for i in range(5):
-        if "error" in rvrf:
-            print(error_color(f"[!] Lỗi khi xác minh job, thử lại {i+1}/5"))
-            rvrf = verify_complete_job(rgj[1], account_id)
-        else:
-            break
 
     if isinstance(rvrf, dict) and "error" in rvrf:
         print(error_color(f"[!] {rvrf['error']}"))
@@ -213,51 +207,25 @@ def __run(
         return "success"
 
 def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chrome):
-    max_block_times = 0
-    max_error_get_job_times = 0
 
     for username_ins, session_path in data.items():
-        if max_block_times >= 2:
-            waiting_ui(max_wait_block, text=f"Hãy đợi {max_wait_block} để tiếp tục do instagram bắt đầu block follow")
-            max_block_times = 0
-
         try:
             print(system_color(f"[>] account đang chạy -> {username_ins}"))
             driver = driver_init(session_path, headless, hide_chrome)
             load_cookies(driver, cookie_f_name=username_ins)
 
-            for i in range(100):
-                if max_error_get_job_times >= 5:
-                    print(error_color("[!] Lỗi nhận job vượt quá số lần quy định, đổi account.."))
-                    max_error_get_job_times = 0
-                    break
-
-                driver.get("https://www.instagram.com/")
-                print(system_color(f"[>] account đang chạy -> {username_ins}, số lần chạy {i+1}/100"))
+            for i in range(25):
+                print(system_color(f"[>] account đang chạy -> {username_ins}, số lần chạy {i+1}/25"))
                 run_res = __run(driver, username_id_ins_gl[username_ins], 5)
                 if run_res == "follow_block":
-                    max_block_times += 1
+                    waiting_ui(max_wait_block, text=f"Hãy đợi {max_wait_block} để tiếp tục do instagram bắt đầu block follow")
                     print(error_color(f"[!] Account {username_ins} bị block follow, đổi account khác.."))
                     break
-                elif run_res == "error_get_job":
-                    max_error_get_job_times += 1
-                    waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
-                    driver.execute_script("window.open();")
-                    driver.close()
-                    handles = driver.window_handles
-                    driver.switch_to.window(handles[0])
-                else:
-                    waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
-                    driver.execute_script("window.open();")
-                    driver.close()
-                    handles = driver.window_handles
-                    driver.switch_to.window(handles[0])
-
-                    max_error_get_job_times = 0
-                    max_block_times = 0
+                waiting_ui(waitime, f"đợi {waitime}s để tiếp tục")
                 
             storage_cookies(driver, cookie_f_name=username_ins)
             driver.quit()
+
         except:
             try:
                 driver.quit()
