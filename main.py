@@ -214,7 +214,7 @@ def __main(username_id_ins_gl, data, waitime, max_wait_block, headless, hide_chr
             driver = driver_init(session_path, headless, hide_chrome)
             load_cookies(driver, cookie_f_name=username_ins)
 
-            for i in range(25):
+            for i in range(300):
                 print(system_color(f"[>] account đang chạy -> {username_ins}, số lần chạy {i+1}/25"))
                 run_res = __run(driver, username_id_ins_gl[username_ins], 5)
                 if run_res == "follow_block":
